@@ -366,8 +366,8 @@ public class MavenClassLoader implements AutoCloseable {
                 new ArchiveStreamFactory().createArchiveInputStream("tar", fis)) {
             TarArchiveEntry entry;
             while ((entry = (TarArchiveEntry) debInputStream.getNextEntry()) != null) {
-                final File outputFile = new File(outputDir, entry.getName());
-                if (!outputFile.toPath().normalize().startsWith(outputDir.toPath())) {
+            final File outputFile = new File(outputDir, entry.getName()).toPath().normalize().toFile();
+                if (!outputFile.toPath().normalize().startsWith(outputDir.toPath().normalize())) {
                     throw new IOException("Bad zip entry");
                 }
 
